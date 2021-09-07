@@ -6,7 +6,7 @@
   --site-domain={{ ECOMMERCE_HOST }}:8130 \
   --site-name=dev \
   --partner-code=dev \
-  --partner-name="Open edX - development" \
+  --partner-name="ЦОПП СК - development" \
   --lms-url-root="http://{{ LMS_HOST }}:8000" \
   --client-side-payment-processor={{ ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS|join(",") }} \
   --payment-processors={{ ECOMMERCE_ENABLED_PAYMENT_PROCESSORS|join(",") }} \
@@ -24,8 +24,8 @@
   --site-id=2 \
   --site-domain={{ ECOMMERCE_HOST }} \
   --site-name=prod \
-  --partner-code=openedx \
-  --partner-name="Open edX" \
+  --partner-code=copp \
+  --partner-name="ЦОПП СК" \
   --lms-url-root="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}" \
   --lms-public-url-root="{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}" \
   --client-side-payment-processor={{ ECOMMERCE_ENABLED_CLIENT_SIDE_PAYMENT_PROCESSORS|join(",") }} \
