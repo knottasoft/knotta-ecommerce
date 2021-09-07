@@ -52,7 +52,7 @@ config = {
         "DOCKER_IMAGE": "{{ DOCKER_REGISTRY }}overhangio/openedx-ecommerce:{{ ECOMMERCE_VERSION }}",
         "WORKER_DOCKER_IMAGE": "{{ DOCKER_REGISTRY }}overhangio/openedx-ecommerce-worker:{{ ECOMMERCE_VERSION }}",
         "EXTRA_PIP_REQUIREMENTS": [],
-        "HOST": "ecommerce.{{ LMS_HOST }}",
+        "HOST": "ecommerce.{{ MAIN_DOMAIN }}",
         "MYSQL_DATABASE": "ecommerce",
         "MYSQL_USERNAME": "ecommerce",
         "OAUTH2_KEY": "ecommerce",
