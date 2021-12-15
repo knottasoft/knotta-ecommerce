@@ -72,6 +72,14 @@ EMAIL_USE_TLS = {{SMTP_USE_TLS}}
 ENTERPRISE_SERVICE_URL = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/enterprise/'
 ENTERPRISE_API_URL = urljoin(ENTERPRISE_SERVICE_URL, 'api/v1/')
 
+{% if MFE_ENTERPRISE_MFE_APP %}
+CORS_ORIGIN_WHITELIST.append("{% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ MFE_ENTERPRISE_MFE_APP["name"] }}.{{ MAIN_DOMAIN }}")
+{% endif %}
+
+{% if MFE_LEARNER_MFE_APP %}
+CORS_ORIGIN_WHITELIST.append("{% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ MFE_LEARNER_MFE_APP["name"] }}.{{ MAIN_DOMAIN }}")
+{% endif %}
+
 LOGGING["handlers"]["local"] = {
     "class": "logging.handlers.WatchedFileHandler",
     "filename": "/var/log/ecommerce.log",
