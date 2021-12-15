@@ -85,7 +85,7 @@ ENTERPRISE_API_URL = urljoin(ENTERPRISE_SERVICE_URL, 'api/v1/')
 
 ENTERPRISE_LEARNER_PORTAL_HOSTNAME = '{% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ MFE_LEARNER_MFE_APP["name"] }}.{{ MAIN_DOMAIN }}'
 
-ENTERPRISE_CATALOG_API_CLIENT = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ ENTERPRISE_CATALOG_HOST }}/api/v1/'
+ENTERPRISE_CATALOG_API_URL = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ ENTERPRISE_CATALOG_HOST }}/api/v1/'
 
 LOGGING["handlers"]["local"] = {
     "class": "logging.handlers.WatchedFileHandler",
