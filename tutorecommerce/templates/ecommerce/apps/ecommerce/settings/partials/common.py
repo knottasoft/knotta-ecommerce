@@ -12,6 +12,14 @@ CORS_ALLOW_CREDENTIALS = True
 
 OSCAR_DEFAULT_CURRENCY = "{{ ECOMMERCE_CURRENCY }}"
 
+{% if MFE_ENTERPRISE_MFE_APP %}
+CORS_ORIGIN_WHITELIST.append("{% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ MFE_ENTERPRISE_MFE_APP["name"] }}.{{ MAIN_DOMAIN }}")
+{% endif %}
+
+{% if MFE_LEARNER_MFE_APP %}
+CORS_ORIGIN_WHITELIST.append("{% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ MFE_LEARNER_MFE_APP["name"] }}.{{ MAIN_DOMAIN }}")
+{% endif %}
+
 EDX_API_KEY = "{{ ECOMMERCE_API_KEY }}"
 {% set jwt_rsa_key = rsa_import_key(JWT_RSA_PRIVATE_KEY) %}
 JWT_AUTH["JWT_ISSUER"] = "{{ JWT_COMMON_ISSUER }}"
@@ -69,16 +77,13 @@ EMAIL_HOST_USER = "{{ SMTP_USERNAME }}"
 EMAIL_HOST_PASSWORD = "{{ SMTP_PASSWORD }}"
 EMAIL_USE_TLS = {{SMTP_USE_TLS}}
 
+COURSE_CATALOG_API_URL='{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ DISCOVERY_HOST }}/api/v1/'
+
+ENTERPRISE_CATALOG_SERVICE_URL = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ ENTERPRISE_CATALOG_HOST }}/'
 ENTERPRISE_SERVICE_URL = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/enterprise/'
 ENTERPRISE_API_URL = urljoin(ENTERPRISE_SERVICE_URL, 'api/v1/')
 
-{% if MFE_ENTERPRISE_MFE_APP %}
-CORS_ORIGIN_WHITELIST.append("{% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ MFE_ENTERPRISE_MFE_APP["name"] }}.{{ MAIN_DOMAIN }}")
-{% endif %}
-
-{% if MFE_LEARNER_MFE_APP %}
-CORS_ORIGIN_WHITELIST.append("{% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ MFE_LEARNER_MFE_APP["name"] }}.{{ MAIN_DOMAIN }}")
-{% endif %}
+ENTERPRISE_LEARNER_PORTAL_HOSTNAME = '{% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ MFE_LEARNER_MFE_APP["name"] }}.{{ MAIN_DOMAIN }}'
 
 LOGGING["handlers"]["local"] = {
     "class": "logging.handlers.WatchedFileHandler",
@@ -94,4 +99,32 @@ PAYMENT_PROCESSORS = list(PAYMENT_PROCESSORS) + {{ ECOMMERCE_EXTRA_PAYMENT_PROCE
 
 {% for payment_processor, urls_module in ECOMMERCE_EXTRA_PAYMENT_PROCESSOR_URLS.items() %}
 EXTRA_PAYMENT_PROCESSOR_URLS["{{ payment_processor }}"] = "{{ urls_module }}"
+
+OFFER_ASSIGNMENT_EMAIL_TEMPLATE = '''
+Вы можете использовать этот код для {REDEMPTIONS_REMAINING} курса(ов).
+Аккаунт: {USER_EMAIL}
+Код доступа: {CODE}
+Срок действия кода: {EXPIRATION_DATE}
+'''
+
+OFFER_REVOKE_EMAIL_TEMPLATE = '''
+Ваш менеджер по обучению отозвал код доступа {CODE}, и он больше не присвоен вашей учетной записи edX {USER_EMAIL}.
+'''
+
+OFFER_REMINDER_EMAIL_TEMPLATE = '''
+Этот код был использован вами {REDEEMED_OFFER_COUNT} раз(ы) из {TOTAL_OFFER_COUNT} доступных для применения.
+Аккаунт: {USER_EMAIL}
+Код доступа: {CODE}
+Срок действия кода: {EXPIRATION_DATE}
+'''
+
+ECOMMERCE_URL_ROOT='{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ ECOMMERCE_HOST }}/'
+
+OSCAR_FROM_EMAIL='info@knotta.ru'
+
+OFFER_ASSIGNMEN_EMAIL_TEMPLATE_BODY_MAP = {
+    'assign': OFFER_ASSIGNMENT_EMAIL_TEMPLATE,
+    'revoke': OFFER_REVOKE_EMAIL_TEMPLATE,
+    'remind': OFFER_REMINDER_EMAIL_TEMPLATE,
+}
 {% endfor %}
