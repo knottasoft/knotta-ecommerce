@@ -80,6 +80,7 @@ EMAIL_USE_TLS = {{SMTP_USE_TLS}}
 ENTERPRISE_SERVICE_URL = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ LMS_HOST }}/enterprise/'
 ENTERPRISE_API_URL = urljoin(ENTERPRISE_SERVICE_URL, 'api/v1/')
 
+ENTERPRISE_CATALOG_SERVICE_URL='{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ ENTERPRISE_CATALOG_HOST }}/'
 ENTERPRISE_CATALOG_API_CLIENT = '{% if ENABLE_HTTPS %}https{% else %}http{% endif %}://{{ ENTERPRISE_CATALOG_HOST }}/api/v1/'
 
 LOGGING["handlers"]["local"] = {
