@@ -12,6 +12,14 @@ CORS_ALLOW_CREDENTIALS = True
 
 OSCAR_DEFAULT_CURRENCY = "{{ ECOMMERCE_CURRENCY }}"
 
+{% if MFE_ENTERPRISE_MFE_APP %}
+CORS_ORIGIN_WHITELIST.append("{% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ MFE_ENTERPRISE_MFE_APP["name"] }}.{{ MAIN_DOMAIN }}")
+{% endif %}
+
+{% if MFE_LEARNER_MFE_APP %}
+CORS_ORIGIN_WHITELIST.append("{% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ MFE_LEARNER_MFE_APP["name"] }}.{{ MAIN_DOMAIN }}")
+{% endif %}
+
 EDX_API_KEY = "{{ ECOMMERCE_API_KEY }}"
 {% set jwt_rsa_key = rsa_import_key(JWT_RSA_PRIVATE_KEY) %}
 JWT_AUTH["JWT_ISSUER"] = "{{ JWT_COMMON_ISSUER }}"
