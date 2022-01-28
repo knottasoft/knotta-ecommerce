@@ -48,7 +48,7 @@ config = {
     "defaults": {
         "VERSION": __version__,
         "API_TIMEOUT": 5,
-        "CURRENCY": "USD",
+        "CURRENCY": "RUB",
         "DOCKER_IMAGE": "{{ DOCKER_REGISTRY }}overhangio/openedx-ecommerce:{{ ECOMMERCE_VERSION }}",
         "WORKER_DOCKER_IMAGE": "{{ DOCKER_REGISTRY }}overhangio/openedx-ecommerce-worker:{{ ECOMMERCE_VERSION }}",
         "EXTRA_PIP_REQUIREMENTS": [],
